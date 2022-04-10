@@ -6,21 +6,11 @@
         <artifactId>yygh-parent</artifactId>
         <groupId>com.atguigu.yygh</groupId>
         <version>1.0</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-client</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>service-cmn-client</module>
-        <module>service-hosp-client</module>
-        <module>service-order-client</module>
-        <module>service-user-client</module>
-    </modules>
+    <artifactId>service-task</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
 </project>
