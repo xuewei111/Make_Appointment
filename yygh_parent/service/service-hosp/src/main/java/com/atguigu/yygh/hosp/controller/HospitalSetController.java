@@ -33,6 +33,7 @@ public class HospitalSetController {
     @GetMapping("findAll")
     public Result findAllHospitaLSet() {
         List<HospitalSet> list = hospitalSetService.list();
+        int i = 1/0;
         return Result.ok(list);
     }
 
@@ -143,6 +144,38 @@ public class HospitalSetController {
     @DeleteMapping("batchRemove")
     public Result batchRemoveHospitalSet(@RequestBody List<Long> idList) {
         hospitalSetService.removeByIds(idList);
+        return Result.ok();
+    }
+
+    /**
+     * 医院设置锁定和解锁
+     * @param id
+     * @param status
+     * @return
+     */
+    @PutMapping("lockHospitalSet/{id}/{status}")
+    public Result lockHospitalSet(@PathVariable Long id,
+                                  @PathVariable Integer status) {
+
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        // 设置状态
+        hospitalSet.setStatus(status);
+        hospitalSetService.updateById(hospitalSet);
+        return Result.ok();
+    }
+
+
+    /**
+     * 发送签名秘钥
+     * @param id
+     * @return
+     */
+    @PutMapping("sendKey/{id}")
+    public Result lockHospitalSet(@PathVariable Long id) {
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        String signKey = hospitalSet.getSignKey();
+        String hoscode = hospitalSet.getHoscode();
+        //TODO 发送短信
         return Result.ok();
     }
 
