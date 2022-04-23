@@ -1,0 +1,16 @@
+server:
+  port: 8201
+
+spring:
+  application:
+    name=service-hosp: service-hosp
+  profiles:
+    active=dev: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yygh_hosp?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

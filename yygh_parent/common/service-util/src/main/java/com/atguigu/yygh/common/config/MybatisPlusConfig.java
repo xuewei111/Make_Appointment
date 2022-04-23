@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.atguigu.yygh.*.mapper")
 public class MybatisPlusConfig {
 
-
     /**
      * 分页插件
      */
