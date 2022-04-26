@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Random;
 
+@CrossOrigin
 @Api(tags = "医院设置管理")
 @RestController
 @RequestMapping("/admin/hosp/hospitalSet")
 public class HospitalSetController {
+
 
     @Autowired
     private HospitalSetService hospitalSetService;
@@ -33,7 +35,7 @@ public class HospitalSetController {
     @GetMapping("findAll")
     public Result findAllHospitaLSet() {
         List<HospitalSet> list = hospitalSetService.list();
-        int i = 1/0;
+//        int i = 1/0;
         return Result.ok(list);
     }
 

@@ -343,6 +343,36 @@ export const asyncRouterMap = [
       }
     ]
   },
-
+  {
+    path: '/hosp',
+    component: Layout,
+    redirect: '/hosp/hospital/list',
+    name: 'hospital',
+    meta: { title: '医院管理', icon: 'table' },
+    children: [
+      {
+        path: 'list',
+        name: '医院设置列表',
+        component: () => import('@/views/hospset/list'),
+        meta: { title: '医院设置列表', icon: 'table' }
+      },
+      {
+        path: 'add',
+        name: '医院设置添加',
+        component: () => import('@/views/hospset/add'),
+        meta: { title: '医院设置添加', icon: 'tree' }
+      }
+      // {
+      //   path: 'hospitalSet/edit/:id',
+      //   name: 'EduTeacherEdit',
+      //   component: () =>import('@/views/hosp/hospitalSet/form'),
+      //   meta: {
+      //     title: '编辑',
+      //     noCache: true
+      //   },
+      //   hidden: true
+      // }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
