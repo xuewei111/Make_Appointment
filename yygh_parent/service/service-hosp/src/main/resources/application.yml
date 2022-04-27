@@ -3,12 +3,12 @@ server:
 
 spring:
   application:
-    name=service-hosp: service-hosp
+    name: service-cmn
   profiles:
-    active=dev: dev
+    active: dev
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/yygh_hosp?characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yygh_hosp?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
     username: root
     password: root
   jackson:
