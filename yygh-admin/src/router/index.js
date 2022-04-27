@@ -361,7 +361,7 @@ export const asyncRouterMap = [
         name: '医院设置添加',
         component: () => import('@/views/hospset/add'),
         meta: { title: '医院设置添加', icon: 'tree' }
-      }
+      },
       // {
       //   path: 'hospitalSet/edit/:id',
       //   name: 'EduTeacherEdit',
@@ -372,6 +372,22 @@ export const asyncRouterMap = [
       //   },
       //   hidden: true
       // }
+    ]
+  },
+  {
+    path: '/cmn',
+    component: Layout,
+    redirect: '/cmn/list',
+    name: '数据管理',
+    alwaysShow: true,
+    meta: { title: '数据管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: '数据字典',
+        component: () => import('@/views/dict/list'),
+        meta: { title: '数据字典', icon: 'table' }
+      }
     ]
   },
   { path: '*', redirect: '/404', hidden: true }

@@ -11,7 +11,7 @@
 
     <version>1.0</version>
     <artifactId>service-hosp</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>service-hosp</name>
     <description>service-hosp</description>
 

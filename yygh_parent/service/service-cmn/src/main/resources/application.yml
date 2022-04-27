@@ -1,0 +1,23 @@
+# ????
+server:
+  port: 8202
+# ???
+spring:
+  application:
+    name: service-cmn
+
+# ?????dev?test?prod
+  profiles:
+    active: dev
+
+# mysql?????
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yygh_cmn?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+
+#??json???????
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
