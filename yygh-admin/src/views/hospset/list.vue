@@ -122,11 +122,11 @@ export default {
       getList(page=1) { //添加当前页参数
          this.current = page
          hospset.getHospSetList(this.current,this.limit,this.searchObj)
-            .then(response => { //请求成功response是接口返回数据
+            .then(({data}) => { //请求成功response是接口返回数据
                //返回集合赋值list
-               this.list = response.data.records
+               this.list = data.data.records
                //总记录数
-               this.total = response.data.total
+               this.total = data.data.total
             })
             .catch(error => {//请求失败
                console.log(error)

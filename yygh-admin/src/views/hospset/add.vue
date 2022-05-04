@@ -66,7 +66,7 @@ export default {
                   message: '添加成功!'
                })
                //跳转列表页面，使用路由跳转方式实现
-               this.$router.push({path:'/hospSet/list'})
+               this.$router.push({path:'/hosp/list'})
             })
       },
       //修改
