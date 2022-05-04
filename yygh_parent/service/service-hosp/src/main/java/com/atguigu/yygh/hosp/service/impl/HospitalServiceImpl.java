@@ -1,12 +1,9 @@
 package com.atguigu.yygh.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.atguigu.yygh.common.exception.YyghException;
-import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.hosp.repository.HospitalRepository;
 import com.atguigu.yygh.hosp.service.HospitalService;
 import com.atguigu.yygh.model.hosp.Hospital;
-import com.atguigu.yygh.model.hosp.HospitalSet;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,5 +39,10 @@ public class HospitalServiceImpl implements HospitalService {
             hospital.setIsDeleted(0);
             hospitalRepository.save(hospital);
         }
+    }
+
+    @Override
+    public Hospital getByHoscode(String hoscode) {
+        return hospitalRepository.getHospitalByHoscode(hoscode);
     }
 }

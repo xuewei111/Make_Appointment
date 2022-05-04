@@ -53,4 +53,21 @@ public class ApiController {
         hospitalService.save(paramMap);
         return Result.ok();
     }
+
+    @ApiOperation(value = "获取医院信息")
+    @PostMapping("hospital/show")
+    public Result hospital(HttpServletRequest request) {
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
+        //必须参数校验 略
+        String hoscode = (String)paramMap.get("hoscode");
+        if(StringUtils.isEmpty(hoscode)) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        //签名校验
+        if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
+            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        return Result.ok(hospitalService.getByHoscode((String)paramMap.get("hoscode")));
+    }
 }
