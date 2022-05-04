@@ -37,6 +37,14 @@ public class ApiController {
         if(StringUtils.isEmpty(hoscode)) {
             throw new YyghException(ResultCodeEnum.PARAM_ERROR);
         }
+
+        //传输过程中“+”转换为了“ ”，因此我们要转换回来
+        String logoDataString = (String)paramMap.get("logoData");
+        if(!StringUtils.isEmpty(logoDataString)) {
+            String logoData = logoDataString.replaceAll("", "+");
+            paramMap.put("logoData", logoData);
+        }
+
         //签名校验
         if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
             throw new YyghException(ResultCodeEnum.SIGN_ERROR);
