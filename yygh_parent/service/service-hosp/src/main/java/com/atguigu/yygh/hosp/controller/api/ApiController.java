@@ -4,6 +4,7 @@ import com.atguigu.yygh.common.exception.YyghException;
 import com.atguigu.yygh.common.helper.HttpRequestHelper;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
+import com.atguigu.yygh.hosp.service.DepartmentService;
 import com.atguigu.yygh.hosp.service.HospitalService;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -27,6 +28,9 @@ public class ApiController {
 
     @Resource
     private HospitalSetService hospitalSetService;
+
+    @Resource
+    private DepartmentService departmentService;
 
     @ApiOperation(value = "上传医院")
     @PostMapping("saveHospital")
@@ -69,5 +73,23 @@ public class ApiController {
         }
 
         return Result.ok(hospitalService.getByHoscode((String)paramMap.get("hoscode")));
+    }
+
+    @ApiOperation(value = "上传科室")
+    @PostMapping("saveDepartment")
+    public Result saveDepartment(HttpServletRequest request) {
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
+        //必须参数校验 略
+        String hoscode = (String)paramMap.get("hoscode");
+        if(StringUtils.isEmpty(hoscode)) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        //签名校验
+        if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
+            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        departmentService.save(paramMap);
+        return Result.ok();
     }
 }
