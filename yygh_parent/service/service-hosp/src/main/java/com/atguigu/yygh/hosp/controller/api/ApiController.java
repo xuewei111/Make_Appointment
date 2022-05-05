@@ -7,9 +7,12 @@ import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.hosp.service.DepartmentService;
 import com.atguigu.yygh.hosp.service.HospitalService;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.atguigu.yygh.model.hosp.Department;
+import com.atguigu.yygh.vo.hosp.DepartmentQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -90,6 +93,52 @@ public class ApiController {
         }
 
         departmentService.save(paramMap);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "获取分页列表")
+    @PostMapping("department/list")
+    public Result department(HttpServletRequest request) {
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
+        //必须参数校验 略
+        String hoscode = (String)paramMap.get("hoscode");
+        //非必填
+        String depcode = (String)paramMap.get("depcode");
+        int page = StringUtils.isEmpty(paramMap.get("page")) ? 1 : Integer.parseInt((String)paramMap.get("page"));
+        int limit = StringUtils.isEmpty(paramMap.get("limit")) ? 10 : Integer.parseInt((String)paramMap.get("limit"));
+
+        if(StringUtils.isEmpty(hoscode)) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        //签名校验
+        if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
+            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        DepartmentQueryVo departmentQueryVo = new DepartmentQueryVo();
+        departmentQueryVo.setHoscode(hoscode);
+        departmentQueryVo.setDepcode(depcode);
+        Page<Department> pageModel = departmentService.selectPage(page, limit, departmentQueryVo);
+        return Result.ok(pageModel);
+    }
+
+    @ApiOperation(value = "删除科室")
+    @PostMapping("department/remove")
+    public Result removeDepartment(HttpServletRequest request) {
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
+        //必须参数校验 略
+        String hoscode = (String)paramMap.get("hoscode");
+        //必填
+        String depcode = (String)paramMap.get("depcode");
+        if(StringUtils.isEmpty(hoscode)) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        //签名校验
+        if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
+            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        departmentService.remove(hoscode, depcode);
         return Result.ok();
     }
 }
