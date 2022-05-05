@@ -7,11 +7,13 @@ import com.atguigu.yygh.model.hosp.Department;
 import com.atguigu.yygh.vo.hosp.DepartmentQueryVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Map;
 
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
 
     @Resource
