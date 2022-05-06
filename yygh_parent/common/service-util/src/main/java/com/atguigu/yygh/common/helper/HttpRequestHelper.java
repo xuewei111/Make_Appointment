@@ -47,13 +47,13 @@ public class HttpRequestHelper {
             paramMap.remove("sign");
         }
         TreeMap<String, Object> sorted = new TreeMap<>(paramMap);
-        StringBuilder str = new StringBuilder();
-        for (Map.Entry<String, Object> param : sorted.entrySet()) {
-            str.append(param.getValue()).append("|");
-        }
-        str.append(signKey);
-        log.info("加密前：" + str.toString());
-        String md5Str = MD5.encrypt(str.toString());
+//        StringBuilder str = new StringBuilder();
+//        for (Map.Entry<String, Object> param : sorted.entrySet()) {
+//            str.append(param.getValue()).append("|");
+//        }
+//        str.append(signKey);
+        log.info("加密前：" + signKey);
+        String md5Str = MD5.encrypt(signKey);
         log.info("加密后：" + md5Str);
         return md5Str;
     }
@@ -66,7 +66,7 @@ public class HttpRequestHelper {
      */
     public static boolean isSignEquals(Map<String, Object> paramMap, String signKey) {
         String sign = (String)paramMap.get("sign");
-        String md5Str = getSign(paramMap, signKey);
+        String md5Str = MD5.encrypt(signKey);;
         if(!sign.equals(md5Str)) {
             return false;
         }
