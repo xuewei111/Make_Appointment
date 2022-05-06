@@ -192,4 +192,25 @@ public class ApiController {
         Page<Schedule> pageModel = scheduleService.selectPage(page , limit, scheduleQueryVo);
         return Result.ok(pageModel);
     }
+
+
+    @ApiOperation(value = "删除科室")
+    @PostMapping("schedule/remove")
+    public Result removeSchedule(HttpServletRequest request) {
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
+        //必须参数校验 略
+        String hoscode = (String)paramMap.get("hoscode");
+        //必填
+        String hosScheduleId = (String)paramMap.get("hosScheduleId");
+        if(StringUtils.isEmpty(hoscode)) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        //签名校验
+        if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
+            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        scheduleService.remove(hoscode, hosScheduleId);
+        return Result.ok();
+    }
 }
