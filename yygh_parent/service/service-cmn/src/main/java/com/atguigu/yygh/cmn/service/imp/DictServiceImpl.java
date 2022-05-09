@@ -99,6 +99,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     public List<Dict> findByDictCode(String dictCode) {
         //根据dictcode获取对应id
         Dict dict = this.getDictByDictCode(dictCode);
+        if(null == dict) return null;
         //根据id获取子节点
         List<Dict> chlidData = this.findChlidData(dict.getId());
         return chlidData;
