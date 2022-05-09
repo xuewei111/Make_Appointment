@@ -390,5 +390,11 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+      path: 'hospital/list',
+      name: '医院列表',
+            component: () =>import('@/views/hosp/hospital/list'),
+      meta: { title: '医院列表', icon: 'table' }
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
