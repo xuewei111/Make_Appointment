@@ -104,6 +104,28 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return chlidData;
     }
 
+    @Override
+    public String getNameByParentDictCodeAndValue(String parentDictCode, String value) {
+        //如果value能唯一定位数据字典，parentDictCode可以传空，例如：省市区的value值能够唯一确定
+        if(StringUtils.isEmpty(parentDictCode)) {
+            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("value", value));
+
+            if(null != dict) {
+                return dict.getName();
+            }
+
+        } else {
+            Dict parentDict = this.getDictByDictCode(parentDictCode);
+            if(null == parentDict) return "";
+
+            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("parent_id", parentDict.getId()).eq("value", value));
+            if(null != dict) {
+                return dict.getName();
+            }
+        }
+        return "";
+    }
+
     private Dict getDictByDictCode(String dictCode) {
         QueryWrapper<Dict> wrapper = new QueryWrapper<>();
         wrapper.eq("dict_code",dictCode);
